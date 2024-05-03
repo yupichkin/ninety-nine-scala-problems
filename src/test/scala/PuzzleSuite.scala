@@ -7,9 +7,12 @@ import RegularGraphs._
 import SudokuBoard._
 import SyntaxChecker._
 import VonKochConjecture._
-import org.scalatest.{FunSuite, Inspectors, Matchers}
 
-class PuzzleSuite extends FunSuite with Matchers with Inspectors {
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.Inspectors
+
+class PuzzleSuite extends AnyFunSuite with Matchers with Inspectors {
   test("90 generate all configurations of the eight queens problem") {
     val result = eightQueens(8)
     result should contain(List(4, 2, 7, 3, 6, 8, 5, 1))

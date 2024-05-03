@@ -1,8 +1,10 @@
 import java.util.NoSuchElementException
 
-import org.scalatest.{FunSuite, Inspectors, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.Inspectors
 
-class GraphSuite extends FunSuite with Matchers with Inspectors {
+class GraphSuite extends AnyFunSuite with Matchers with Inspectors {
   test("80 (not mentioned in problem statements) graphs constructed from equivalent forms are equal") {
     val gt = Graph.term(
       List('b, 'c, 'd, 'f, 'g, 'h, 'k),

@@ -1,7 +1,8 @@
 import S99Int._
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class ArithmeticSuite extends FunSuite with Matchers {
+class ArithmeticSuite extends AnyFunSuite with Matchers {
   test("31 determine whether a given integer number is prime") {
     (1 to 20).filter(_.isPrime) shouldEqual List(2, 3, 5, 7, 11, 13, 17, 19)
   }

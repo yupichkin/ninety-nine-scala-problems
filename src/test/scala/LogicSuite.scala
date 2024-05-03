@@ -1,7 +1,9 @@
 import S99Logic.{not => s99not, _}
-import org.scalatest.{FunSuite, Matchers}
 
-class LogicSuite extends FunSuite with Matchers {
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
+
+class LogicSuite extends AnyFunSuite with Matchers {
   test("46a logical and") {
     and(true, true) shouldBe true
     and(true, false) shouldBe false

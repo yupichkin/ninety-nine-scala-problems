@@ -1,7 +1,9 @@
 import S99List.{length => s99length, _}
-import org.scalatest.{FunSuite, Inspectors, Matchers}
+import org.scalatest.Inspectors
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class ListSuite extends FunSuite with Matchers with Inspectors {
+class ListSuite extends AnyFunSuite with Matchers with Inspectors {
   test("01 find the last element of a list") {
     last(List(1, 1, 2, 3, 5, 8)) shouldBe 8
   }
