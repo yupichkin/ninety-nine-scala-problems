@@ -122,31 +122,75 @@ object S99List {
   }
 
   // P11
-  def encodeModified[T](l: List[T]): List[Any] = ???
+  def encodeModified[T](l: List[T]): List[Any] = {
+    encode(l).map {
+      case (1, elem) => elem
+      case default => default
+    }
+  }
 
   // P12
-  def decode[T](l: List[(Int, T)]): List[T] = ???
+  def decode[T](l: List[(Int, T)]): List[T] = {
+    l.flatMap(elem => List.fill(elem._1)(elem._2))
+  }
 
   // P13
-  def encodeDirect[T](l: List[T]): List[(Int, T)] = ???
+  def encodeDirect[T](l: List[T]): List[(Int, T)] = {
+    if(l.isEmpty) Nil
+    else l.foldLeft[List[(Int, T)]](List((0, l.head))){
+      case (acc @ ((count, lastElem) :: tail), elem) =>
+        if(elem == lastElem) (count + 1, lastElem) :: tail
+        else (1, elem) :: acc
+    }.reverse
+  }
 
   // P14
-  def duplicate[T](l: List[T]): List[T] = ???
+  def duplicate[T](l: List[T]): List[T] = {
+    l.flatMap(List.fill(2)(_))
+  }
 
   // P15
-  def duplicateN[T](n: Int, l: List[T]): List[T] = ???
+  def duplicateN[T](n: Int, l: List[T]): List[T] = {
+    l.flatMap(List.fill(n)(_))
+  }
 
   // P16
-  def drop[T](n: Int, l: List[T]): List[T] = ???
+  def drop[T](n: Int, l: List[T]): List[T] = {
+    l.foldLeft[(Int, List[T])]((n - 1, List())){ case ((count, acc), elem) =>
+      if(count == 0) (n - 1, acc)
+      else (count - 1, elem :: acc)
+    }._2.reverse
+  }
 
   // P17
-  def split[T](n: Int, l: List[T]): (List[T], List[T]) = ???
+
+  def split[T](n: Int, l: List[T]): (List[T], List[T]) = {
+    @tailrec
+    def splitRec(n: Int, acc: List[T], l: List[T]): (List[T], List[T]) = (n, l) match {
+      case (0, _)            => (acc.reverse, l)
+      case (_, head :: tail) => splitRec(n - 1, head :: acc, tail)
+      case (_, Nil)          => (acc.reverse, Nil)
+    }
+
+    splitRec(n, List(), l)
+  }
 
   // P18
-  def slice[T](from: Int, to: Int, l: List[T]): List[T] = ???
+  @tailrec
+  def slice[T](from: Int, to: Int, l: List[T]): List[T] = {
+    if(from > 0) slice(from - 1, to - 1, l.tail)
+    else l.take(to)
+  }
 
   // P19
-  def rotate[T](n: Int, l: List[T]): List[T] = ???
+  def rotate[T](n: Int, l: List[T]): List[T] = {
+    if(l.isEmpty) l
+    else {
+      val positiveN = (n % l.length + l.length) % l.length
+      val (newTail, newHead) = split(positiveN, l)
+      newHead ::: newTail
+    }
+  }
 
   // P20
   def removeAt[T](n: Int, l: List[T]): (List[T], T) = ???
